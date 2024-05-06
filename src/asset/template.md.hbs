@@ -1,0 +1,49 @@
+<style>
+    {{{ index_css }}}
+</style>
+<style>
+    {{{ cal_heatmap_css }}}
+</style>
+<script type="text/javascript">{{{ d3_v7_min_js }}}</script>
+<script type="text/javascript">{{{ cal_heatmap_min_js }}}</script>
+<script type="text/javascript">{{{ echarts_min_js }}}</script>
+
+<script type="text/javascript">
+let counter = 0;
+function appendElem(width, height, innerHTML) {
+    const elem = document.createElement('div')
+    elem.setAttribute('id', `elem-${counter++}`)
+    elem.style.width = width
+    elem.style.height = height
+    elem.style.alignSelf = 'center'
+    if (innerHTML) {
+        elem.innerHTML = innerHTML
+    }
+    document.body.appendChild(elem)
+    return elem
+}
+
+function appendChart(width, height, option) {
+    const chartDom = appendElem(width, height)
+    const myChart = echarts.init(chartDom);
+    option && myChart.setOption(option);
+}
+
+</script>
+
+标题：`{{title}}`
+
+
+过去七天绘画时间：`{{ last_seven_day_time }}` 分  
+
+过去三十天绘画时间：`{{ last_thrity_day_time }}` 分
+
+绘画总时间：`{{ sum_time }}` 分  
+
+日最长绘画时间：`{{ max_date }}` ，`{{ max_time }}` 分
+
+<script type="text/javascript">
+{{#each elems}}
+{{{this}}};
+{{/each}}
+</script>

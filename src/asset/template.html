@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="./d3.v7.min.js"></script>
+  <script src="./cal-heatmap.min.js"></script>
+  <script src="https://unpkg.com/@popperjs/core@2"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/Legend.min.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/LegendLite.min.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/Tooltip.min.js"></script>
+  <script src="https://unpkg.com/cal-heatmap/dist/plugins/CalendarLabel.min.js"></script>
+  <link rel="stylesheet" href="./cal-heatmap.css">
+  <style>
+    body {
+      margin: 0 auto;
+      max-width: 50em;
+    
+      font-family: "Helvetica", "Arial", sans-serif;
+      line-height: 1.5;
+      padding: 4em 1em;
+    }
+    h2 {
+      margin-top: 1em;
+      padding-top: 1em;
+    }
+    #ex-ghDay {
+      max-width: 100%;
+      overflow: hidden;
+    }
+    @media screen {
+      body, html {
+        background: #22272d;
+        color: #adbac7;
+      }
+      * {
+        color: #adbac7;
+        box-sizing: border-box;
+      }
+    }
+    @media print {
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="ex-ghDay" className="margin-bottom--md"></div>
+  <a className="button button--sm button--secondary margin-top--sm" href="#">
+    ← Previous
+  </a>
+  <a className="button button--sm button--secondary margin-top--sm margin-left--xs" href="#">
+  </a>
+  <div>
+    <span>Less</span>
+    <div id="ex-ghDay-legend"></div>
+    >More</span>
+  </div>
+  </div>
+
+  <script type="text/javascript">
+    const cal = new CalHeatmap();
+    const tooltip = [Tooltip, {
+      
+    }]
+    cal.paint({
+      itemSelector: '#ex-ghDay',
+      // domain为最粗的粒度，如设置成月，最粗的粒度就是月，可以认为它是X轴，设置range为12就是12个月的数据
+      range: 48,
+      domain: {
+        type: 'month',
+        label: { text: 'MMM', textAlign: 'start', position: 'top' },
+        dynamicDimension: true,
+      },
+      // subDomain为一个更小的粒度，必须小于domain（小太多会报错），可以认为是y轴（但会折几次），如github的贡献图的domain，subDomain就是月和日
+      // subDomain 可以以
+      subDomain: {
+        type: 'day',
+      }
+    })
+    // window.onload = () => {
+    //   const cal = new CalHeatmap();
+    //   cal.paint({
+    //     data: {
+    //       source: './seattle-weather.csv',
+    //       type: 'csv',
+    //       x: 'date',
+    //       y: d => +d['temp_max'],
+    //       groupY: 'max',
+    //     },
+    //     date: { start: new Date('2012-01-01') },
+    //     range: 12,
+    //     scale: {
+    //       color: {
+    //         type: 'threshold',
+    //         range: ['#14432a', '#166b34', '#37a446', '#4dd05a'],
+    //         domain: [10, 20, 30],
+    //       },
+    //     },
+    //     domain: {
+    //       type: 'month',
+    //       gutter: 4,
+    //       label: { text: 'MMM', textAlign: 'start', position: 'top' },
+    //     },
+    //     subDomain: { type: 'ghDay', radius: 2, width: 11, height: 11, gutter: 4 },
+    //     itemSelector: '#ex-ghDay',
+    //   }, [
+    //     [
+    //       Tooltip,
+    //       {
+    //         text: function (date, value, dayjsDate) {
+    //           return (
+    //             (value ? value : 'No') +
+    //             ' contributions on ' +
+    //             dayjsDate.format('dddd, MMMM D, YYYY')
+    //           );
+    //         },
+    //       },
+    //     ],
+    //     [
+    //       LegendLite,
+    //       {
+    //         includeBlank: true,
+    //         itemSelector: '#ex-ghDay-legend',
+    //         radius: 2,
+    //         width: 11,
+    //         height: 11,
+    //         gutter: 4,
+    //       },
+    //     ],
+    //     [
+    //       CalendarLabel,
+    //       {
+    //         width: 30,
+    //         textAlign: 'start',
+    //         text: () => dayjs.weekdaysShort().map((d, i) => (i % 2 == 0 ? '' : d)),
+    //         padding: [25, 0, 0, 0],
+    //       },
+    //     ],
+    //   ]);
+    // }
+  </script>
+</body>
+
+</html>
